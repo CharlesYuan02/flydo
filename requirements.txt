@@ -1,0 +1,3 @@
+djitellopy==2.4.0
+pygame==2.1.2
+python-opencv==4.5.5.62
