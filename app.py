@@ -4,22 +4,14 @@ from djitellopy import tello
 from tkinter import *
 from PIL import Image, ImageTk # You have to import this last or else Image.open throws an error
 
-import time
-
 def takeoff_land(flydo):
     '''Flydo takes off if not flying, lands if flying.'''
     global flying
     if flying:
-        for i in range(10):
-            print(i)
-            time.sleep(1)
-        # flydo.land()
+        threading.Thread(target=lambda: flydo.land()).start()
         flying = False
     else:
-        for i in range(10):
-            print(i)
-            time.sleep(1)
-        # flydo.takeoff()
+        threading.Thread(target=lambda: flydo.takeoff()).start()
         flying = True
     
 
@@ -51,9 +43,7 @@ def run_app(HEIGHT=800, WIDTH=800):
     battery.place(x=(WIDTH - bat_width - 0.1*HEIGHT + bat_height), rely=0.9, relwidth=bat_width/WIDTH, relheight=bat_height/HEIGHT)
 
     # Takeoff/Land button
-    forward_button = Button(root, text="Takeoff/Land", font=("Verdana", 18), bg="#95dff3", command=threading.Thread(target=lambda: takeoff_land(flydo)).start)
-    if threading.Thread(target=lambda: takeoff_land(flydo)).is_alive():
-        threading.Thread(target=lambda: takeoff_land(flydo)).join()
+    forward_button = Button(root, text="Takeoff/Land", font=("Verdana", 18), bg="#95dff3", command=lambda: takeoff_land(flydo))
     fb_width = 200
     fb_height = 100
     forward_button.config(width=fb_width, height=fb_height)
