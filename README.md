@@ -2,7 +2,7 @@
 <img src="https://github.com/Chubbyman2/flydo/blob/main/flydo.PNG">
 
 ## Introduction
-I have no idea why, but back when 2021 first started, I was listening to <a href="https://www.youtube.com/watch?v=8ajBxCch0No">Speed of Light by DJ Okawari</a> (you know, that Arknights song). The video was basically just a looping gif of Texas flying a drone with Exusiai, and for some reason I ended up really wanting a drone. So I bought one from DJI that could be programmed with Python, the Tello EDU. I've been meaning to do this project for a while now, so here it is. A GUI made using Tkinter for my DJI Tello EDU, named Flydo (after Fido from 86).
+I have no idea why, but back when 2021 first started, I was listening to <a href="https://www.youtube.com/watch?v=8ajBxCch0No">Speed of Light by DJ Okawari</a> (you know, that Arknights song). The video was basically just a looping gif of Texas flying a drone with Exusiai, and for some reason I ended up really wanting a drone. So I bought one from DJI that could be programmed with Python, the Tello EDU. I've been meaning to do this project for a while now, so here it is. A GUI made using Tkinter for my DJI Tello EDU, named Flydo (after <a href="https://86-eighty-six.fandom.com/wiki/Fido">Fido</a> from 86).
 
 ## Prerequisites
 ```
