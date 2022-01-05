@@ -21,9 +21,12 @@ Tkinter was used to create the GUI for controlling the drone. Different drone co
 <img src="https://github.com/Chubbyman2/flydo/blob/main/gui.PNG">
 
 ## Future Plans
-1. Implement functions for taking pictures and videos.
-2. Use an object detection algorithm (YOLOv5, etc) to allow the drone to track humans.
-3. Figure out how to decrease latency between drone feed and visual display. 
+### Update 1 (Jan 5, 2022):
+Flydo can now take screenshots and videos! 
+### To Do:
+1. Use an object detection algorithm (YOLOv5, etc) to allow the drone to track humans.
+2. Figure out how to decrease latency between drone feed and visual display. 
+3. Maybe find a way to use less global variables and clean up code for better practice.
 
 ## License
 This project is licensed under the MIT License - see the <a href="https://github.com/Chubbyman2/flydo/blob/main/LICENSE">LICENSE</a> file for details.
