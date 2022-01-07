@@ -1,13 +1,16 @@
 import cv2
 import datetime
+import numpy as np
 import os
 import threading
 import time
+import torch
 from djitellopy import tello
 from moviepy.editor import *
 from tkinter import *
 from PIL import Image, ImageTk # You have to import this last or else Image.open throws an error
 from commands import start_flying, stop_flying
+from model.train import get_transform
 
 
 def takeoff_land(flydo):
@@ -83,6 +86,51 @@ def take_video_helper():
         videowriter.write(frame)    
 
 
+def track_person(model_path):
+    '''Uses trained Faster R-CNN model to create bounding box,
+    positions center of Flydo's POV towards center of bbox.'''
+    global tracking
+
+    if tracking:
+        tracking = False
+        print("Stopped tracking")
+    else:
+        tracking = True
+        threading.Thread(target=lambda: tracking_helper(model_path)).start()
+        print("Now tracking")
+    
+
+def tracking_helper(model_path):
+    '''Just a helper function for threading purposes.'''
+    global current_img
+    global tracking_img
+    global tracking
+
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    model = torch.load(model_path)
+    model.eval() # Set to evaluation mode
+    transform = get_transform()
+    
+    while tracking:
+        with torch.no_grad():
+            img = Image.fromarray(cv2.cvtColor(current_img, cv2.COLOR_BGR2RGB)) # Convert cv2 img to PIL
+            img = transform(img).to(device)
+            img = img.unsqueeze(0) # Add an extra first dimension, because the model predicts in batches
+            prediction = model(img)
+            try:
+                max_idx = np.argmax(prediction[0]["scores"].cpu().numpy())
+                confidence = prediction[0]["scores"][max_idx].cpu().numpy()
+                bbox_coords = prediction[0]["boxes"].cpu().numpy()[max_idx]
+                bbox_coords = [int(x) for x in bbox_coords]
+                image = current_img
+                image = cv2.rectangle(image, (bbox_coords[0], bbox_coords[1]), (bbox_coords[2], bbox_coords[3]), (0, 0, 255), 2)
+                image = cv2.putText(image, f"{int(confidence*100)}%", (bbox_coords[0], bbox_coords[1]), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+            except ValueError: # If there are no boxes detected
+                pass
+            image = cv2.putText(image, "Now Tracking", (30, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+            tracking_img = image # This will be the new overlay
+
+
 def run_app(HEIGHT=800, WIDTH=800):
     root = Tk()
     canvas = Canvas(root, height=HEIGHT, width=WIDTH)
@@ -118,6 +166,13 @@ def run_app(HEIGHT=800, WIDTH=800):
     # For recording videos
     global recording
     recording = False
+
+    # For tracking function
+    global tracking
+    global tracking_img
+    tracking = False
+    tracking_img = None
+    MODEL_PATH = "model/trained_detector.pth"
 
     # Takeoff/Land button
     takeoff_button = Button(root, text="Takeoff/Land", font=("Verdana", 18), bg="#95dff3", command=lambda: takeoff_land(flydo))
@@ -194,9 +249,8 @@ def run_app(HEIGHT=800, WIDTH=800):
     video_button = Button(root, fg="red", text="•", font=("Verdana", 18), bg="#95dff3", command=lambda: take_video())
     video_button.place(x=440, rely=(0.85+0.65)/2, width=80, height=80)
 
-    '''This is still a work-in-progress.'''
     # Track person button
-    tracking_button = Button(root, text="⌐╦╦═─", font=("Verdana", 16), bg="#95dff3")
+    tracking_button = Button(root, text="⌐╦╦═─", font=("Verdana", 16), bg="#95dff3", command=lambda: track_person(MODEL_PATH))
     tracking_button.place(x=360, rely=(0.85+0.65)/2, width=80, height=80)
 
     def display_battery():
@@ -227,11 +281,17 @@ def run_app(HEIGHT=800, WIDTH=800):
     
     def video_stream():
         global current_img
+        global tracking
+        global tracking_img
         h = 480
         w = 720
         frame = flydo.get_frame_read().frame
         current_img = frame # For taking screenshots
-        frame = cv2.resize(frame, (w, h))
+
+        if tracking and tracking_img is not None:
+            frame = cv2.resize(tracking_img, (w, h))
+        else:
+            frame = cv2.resize(frame, (w, h))
         cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
         img = Image.fromarray(cv2image)
         imgtk = ImageTk.PhotoImage(image=img)
