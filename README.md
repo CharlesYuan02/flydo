@@ -47,12 +47,14 @@ Pytorch's pretrained Faster R-CNN model was used for the head-tracking feature. 
 Flydo can now take screenshots and videos! 
 
 ### Update 2 (Jan 6, 2022):
-Flydo's tracking function now generates and overlays bounding boxes! 
+Flydo's tracking function now generates and overlays bounding boxes!
+  
+### Update 3 (Jan 7, 2022):
+app.py's associated functions have been reformatted into class methods. All global variables have been removed and replaced as class variables.
 
 ### To Do:
 1. Create a function to move Flydo based on output of object detector.
 2. Figure out how to decrease latency between drone feed and visual display. 
-3. Maybe find a way to use less global variables and clean up code for better practice.
 
 ## Acknowledgements
 Thanks to Takashi Nakamura, PhD, for writing this <a href="https://medium.com/fullstackai/how-to-train-an-object-detector-with-your-own-coco-dataset-in-pytorch-319e7090da5">article</a> showing me the basics on how to train Faster R-CNN with Pytorch.
