@@ -146,7 +146,7 @@ class GUI():
 
     def run_app(self):
         # For background image
-        bg_dir = "C:\\Users\\charl\\Desktop\\flydo\\Tacit.jpg"
+        bg_dir = "C:\\Users\\charl\\Desktop\\flydo\\docs\\Tacit.jpg"
         img = Image.open(bg_dir).resize((self.WIDTH, self.HEIGHT))
         bg_label = Label(self.root)
         bg_label.img = ImageTk.PhotoImage(img)
