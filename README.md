@@ -1,5 +1,5 @@
 # flydo
-<img src="https://github.com/Chubbyman2/flydo/blob/main/flydo.PNG">
+<img src="https://github.com/Chubbyman2/flydo/blob/main/docs/flydo.PNG">
 
 ## Introduction
 I have no idea why, but back when 2021 first started, I was listening to <a href="https://www.youtube.com/watch?v=8ajBxCch0No">Speed of Light by DJ Okawari</a> (you know, that Arknights song). The video was basically just a looping gif of Texas flying a drone with Exusiai, and for some reason I ended up really wanting a drone. So I bought one from DJI that could be programmed with Python, the Tello EDU. I've been meaning to do this project for a while now, so here it is. A GUI made using Tkinter for my DJI Tello EDU, named Flydo (after <a href="https://86-eighty-six.fandom.com/wiki/Fido">Fido</a> from 86).
@@ -40,7 +40,7 @@ Pytorch's pretrained Faster R-CNN model was used for the head-tracking feature. 
 <a href="https://github.com/jsbroks/coco-annotator">Coco-Annotator<a> is an image-labelling tool created by felixdollack that I also use for my research. It outputs data in Coco format for object detection and instance segmentation, and I used it to label my <a href="https://github.com/Chubbyman2/flydo/tree/main/model/labelled_data">custom dataset</a> that I collated using Flydo's own camera. It's basically just a bunch of pictures of me in my room.
 
 ## Tkinter Graphical User Interface (GUI)
-<img src="https://github.com/Chubbyman2/flydo/blob/main/gui.PNG">
+<img src="https://github.com/Chubbyman2/flydo/blob/main/docs/gui.PNG">
 
 ## Future Plans
 ### Update 1 (Jan 5, 2022):
