@@ -54,7 +54,8 @@ app.py's associated functions have been reformatted into class methods. All glob
 
 ### To Do:
 1. Create a function to move Flydo based on output of object detector.
-2. Figure out how to decrease latency between drone feed and visual display. 
+2. Improve accuracy of tracker (i.e. the object detection model).
+3. Figure out how to decrease latency between drone feed and visual display. 
 
 ## Acknowledgements
 Thanks to Takashi Nakamura, PhD, for writing this <a href="https://medium.com/fullstackai/how-to-train-an-object-detector-with-your-own-coco-dataset-in-pytorch-319e7090da5">article</a> showing me the basics on how to train Faster R-CNN with Pytorch.
