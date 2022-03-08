@@ -51,6 +51,9 @@ Flydo's tracking function now generates and overlays bounding boxes!
   
 ### Update 3 (Jan 7, 2022):
 app.py's associated functions have been reformatted into class methods. All global variables have been removed and replaced as class variables.
+  
+### Update 4 (Mar 3, 2022):
+Apparently the issue with the video feed latency has to do with the djitellopy library itself, and there isn't a way to avoid this unless you switch to <a href="https://github.com/hanyazou/TelloPy">TelloPy</a>. I'm currently in the middle of midterms, but I'll make sure to do this soon.
 
 ### To Do:
 1. Create a function to move Flydo based on output of object detector.
